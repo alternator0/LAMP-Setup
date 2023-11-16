@@ -11,25 +11,25 @@ if [[ "$decision" =~ ^[yY]$ ]];
 then
     echo "What should be the new name of the host?"
     read new_hostname
-    sudo hostname "$new_hostname"
+    hostname "$new_hostname"
 fi
 
 release=/etc/os-release
 #to be done on Ubuntu and Arch
 #if  grep -q "Ubuntu" $release || grep -q "Debian" $release
 #then
-#    sudo apt install -y apache2
-#    sudo apt install -y libapache2-mod-php
-#    sudo systemctl restart apache2
-#    sudo apt install -y mysql-server
+#    apt install -y apache2
+#    apt install -y libapache2-mod-php
+#    systemctl restart apache2
+#    apt install -y mysql-server
 #fi
 
 #if grep -q "Arch" $release
 #then
-#    yes | sudo pacman -S httpd
-#    yes | sudo pacman -S php
-#    sudo systemctl restart apache2
-#    yes | sudo pacman -S mysql-server
+#    yes | pacman -S httpd
+#    yes | pacman -S php
+#    systemctl restart apache2
+#    yes | pacman -S mysql-server
 #fi
 
 #
@@ -38,20 +38,20 @@ release=/etc/os-release
 
 if grep -q "CentOS" $release || grep -q "Fedora" $release || grep -q "RedHat" $release
 then
-    sudo dnf install -y httpd
+    dnf install -y httpd
     systemctl start httpd
     systemctl enable httpd.service
     firewall-cmd --permanent --add-service=http
     firewall-cmd --permanent --add-service=https
     firewall-cmd --reload
-    sudo dnf install -y mariadb-server mariadb
+    dnf install -y mariadb-server mariadb
     systemctl start mariadb.service
     systemctl enable mariadb.service
-    sudo dnf install -y php
-    sudo systemctl restart httpd.service
-    sudo dnf install -y php-mysqlnd php-curl
-    sudo systemctl restart httpd.service
-    sudo dnf install -y phpMyAdmin
+    dnf install -y php
+    systemctl restart httpd.service
+    dnf install -y php-mysqlnd php-curl
+    systemctl restart httpd.service
+    dnf install -y phpMyAdmin
 else
     echo 'This script does not support your distribution of Linux'
     exit 1
